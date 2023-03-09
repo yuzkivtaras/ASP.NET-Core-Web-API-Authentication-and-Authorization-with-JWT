@@ -1,9 +1,11 @@
-﻿using AuthenticationAndAuthorizationJWT.Data;
+﻿using AuthenticationAndAuthorizationJWT.DataServices.Data;
+using AuthenticationAndAuthorizationJWT.DataServices.IConfiguration;
 using AuthenticationAndAuthorizationJWT.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AuthenticationAndAuthorizationJWT.Controllers
 {
@@ -11,39 +13,39 @@ namespace AuthenticationAndAuthorizationJWT.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        public UsersController(ApplicationDbContext context)
+        private IUnitOfWork _unitOfWork;
+
+        public UsersController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork= unitOfWork;
         }
 
         [HttpGet]
-        public IActionResult GetUsers() 
+        public async Task<IActionResult> GetUsers() 
         {
-            var users = _context.Users.Where(x => x.Status == 1).ToList();
+            var users = await _unitOfWork.Users.All();
             return Ok(users);
         }
 
         [HttpPost]
-        public IActionResult AddUsers(User user) 
+        public async Task<IActionResult> AddUsers(User user) 
         {
             var _user = new User();
             _user.FirstName = user.FirstName;
             _user.LastName = user.LastName;
             _user.Email = user.Email;
-            _user.DateOfBirth = Convert.ToDateTime(user.DateOfBirth);
             user.Status = 1;
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            await _unitOfWork.Users.Add(_user);
+            await _unitOfWork.ComplateAsync();
 
-            return Ok();
+            return CreatedAtRoute("GetUser", new { id = _user.Id},  user);
         }
         [HttpGet]
-        [Route("GetUser")]
+        [Route("GetUser", Name = "GetUser")]
         public IActionResult GetUser(Guid id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = _unitOfWork.Users.GetById(id);
 
             return Ok(user);
         }

@@ -1,7 +1,7 @@
 ﻿using AuthenticationAndAuthorizationJWT.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthenticationAndAuthorizationJWT.Data
+namespace AuthenticationAndAuthorizationJWT.DataServices.Data
 {
     public class ApplicationDbContext : DbContext
     {

@@ -1,11 +1,15 @@
-using AuthenticationAndAuthorizationJWT.Data;
+using AuthenticationAndAuthorizationJWT.DataServices.Data;
+using AuthenticationAndAuthorizationJWT.DataServices.IConfiguration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AuthenticationAndAuthorizationJWT
 {
@@ -23,10 +27,22 @@ namespace AuthenticationAndAuthorizationJWT
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthenticationAndAuthorizationJWT", Version = "v1" });
+            });
+
+            services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+
+                opt.AssumeDefaultVersionWhenUnspecified= true;
+
+                opt.DefaultApiVersion = ApiVersion.Default;
             });
         }
 

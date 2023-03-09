@@ -16,11 +16,8 @@ namespace AuthenticationAndAuthorizationJWT.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    AddedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
