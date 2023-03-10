@@ -3,6 +3,8 @@ using AuthenticationAndAuthorizationJWT.Authentication.Models.DTO.Incoming;
 using AuthenticationAndAuthorizationJWT.Authentication.Models.DTO.Outgoing;
 using AuthenticationAndAuthorizationJWT.DataServices.IConfiguration;
 using AuthenticationAndAuthorizationJWT.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,7 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AuthenticationAndAuthorizationJWT.Controllers
-{
+{    
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
