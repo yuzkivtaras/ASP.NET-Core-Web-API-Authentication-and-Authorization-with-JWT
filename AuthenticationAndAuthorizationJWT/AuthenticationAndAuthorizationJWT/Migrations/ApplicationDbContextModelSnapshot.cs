@@ -34,6 +34,9 @@ namespace AuthenticationAndAuthorizationJWT.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("IdentityId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 

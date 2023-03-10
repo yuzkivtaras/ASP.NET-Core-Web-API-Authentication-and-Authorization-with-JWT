@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthenticationAndAuthorizationJWT.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230309090018_Initial")]
+    [Migration("20230310121219_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,9 @@ namespace AuthenticationAndAuthorizationJWT.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("IdentityId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
