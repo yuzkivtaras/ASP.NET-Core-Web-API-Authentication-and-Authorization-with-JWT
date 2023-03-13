@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AuthenticationAndAuthorizationJWT.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]   
     public class UsersController : ControllerBase
@@ -36,6 +36,7 @@ namespace AuthenticationAndAuthorizationJWT.Controllers
             _user.LastName = user.LastName;
             _user.Email = user.Email;
             _user.Phone = user.Phone;
+            _user.DateOfBirth = user.DateOfBirth;
             _user.Country = user.Country;
             _user.Status = 1;
 

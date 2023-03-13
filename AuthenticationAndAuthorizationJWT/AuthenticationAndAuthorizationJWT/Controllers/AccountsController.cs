@@ -78,6 +78,7 @@ namespace AuthenticationAndAuthorizationJWT.Controllers
                 _user.FirstName = registrationRequestDto.FirstName;
                 _user.LastName = registrationRequestDto.LastName;
                 _user.Email = registrationRequestDto.Email;
+                _user.DateOfBirth = DateTime.UtcNow;
                 _user.Phone = "";
                 _user.Country = "";
                 _user.Status = 1;
@@ -320,7 +321,7 @@ namespace AuthenticationAndAuthorizationJWT.Controllers
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),
-                //Expires = DateTime.UtcNow.Add(_jwtConfig.ExpiryTimeFrame),
+                Expires = DateTime.Now.Add(_jwtConfig.ExpiryTimeFrame),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -332,7 +333,7 @@ namespace AuthenticationAndAuthorizationJWT.Controllers
 
             var refreshToken = new RefreshToken
             {
-                //AddedDate = DateTime.UtcNow,
+                AddedDate = DateTime.UtcNow,
                 Token = $"{RandomStringGenerator(25)}_{Guid.NewGuid()}",
                 UserId = user.Id,
                 IsRevoked = false,
